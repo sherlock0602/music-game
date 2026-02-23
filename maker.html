@@ -90,7 +90,7 @@
             📂 選擇 MP3 音樂
         </label>
         
-        <input type="file" id="file-input" accept="audio/*" onchange="loadAudio(this)" style="opacity: 0; position: absolute; z-index: -1;">
+        <input type="file" id="file-input" accept="audio/*, audio/mpeg, .mp3, .wav" onchange="loadAudio(this)" style="opacity: 0; position: absolute; z-index: -1;">
     </div>    <div id="loading-box">
         <div class="spinner"></div>
         <div id="loading-msg" style="color:#fff; font-size:18px;">正在解析波形...</div>
@@ -487,4 +487,5 @@
 
 </script>
 </body>
+
 </html>
