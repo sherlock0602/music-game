@@ -32,13 +32,31 @@
         button.primary:hover { background: #00acc1; }
         button.active { background: #4caf50; border-color: #4caf50; }
 
-        /* 進度條與時間 */
+       /* 進度條與時間 */
         #transport-bar {
-            background: #252525; padding: 5px 20px; display: flex; align-items: center; gap: 15px;
+            /* 稍微把整條工具列加高一點點，讓手指更好放 */
+            background: #252525; padding: 12px 20px; display: flex; align-items: center; gap: 15px;
             border-bottom: 1px solid #333;
         }
-        #seek-slider { flex: 1; cursor: pointer; height: 5px; accent-color: #00bcd4; }
-        #time-display { color: #00bcd4; font-size: 14px; min-width: 80px; text-align: right; }
+        #seek-slider { 
+            flex: 1; cursor: pointer; 
+            /* 1. 把軌道整體的觸控高度加厚 */
+            height: 30px; 
+            accent-color: #00bcd4; 
+        }
+        
+        /* 2. 針對平板瀏覽器 (Safari/Chrome)，把拖曳的那顆圓點放大 */
+        #seek-slider::-webkit-slider-thumb {
+            width: 25px; 
+            height: 25px;
+        }
+        /* 針對 Firefox 瀏覽器的圓點放大 */
+        #seek-slider::-moz-range-thumb {
+            width: 25px; 
+            height: 25px;
+        }
+
+        #time-display { color: #00bcd4; font-size: 16px; font-weight: bold; min-width: 80px; text-align: right; }
 
         /* 主編輯區 */
         #viewport {
