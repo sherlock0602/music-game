@@ -540,18 +540,36 @@
         }
     }
 
+  
     // --- 匯出 ---
     function downloadChart() {
-    notes.sort((a,b) => a.time - b.time);
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(notes));
-    const dlAnchorEle = document.createElement('a');
-    dlAnchorEle.setAttribute("href", dataStr);
-    dlAnchorEle.setAttribute("download", "chart.json"); // 預設檔名
-    document.body.appendChild(dlAnchorEle);
-    dlAnchorEle.click();
-    dlAnchorEle.remove();
-    alert("譜面已下載！請將檔案移至對應的歌曲資料夾中。");
-}
+        // 1. 彈出視窗讓使用者輸入檔名
+        let fileName = prompt("請輸入譜面檔案名稱（例如：王小明_小星星）：", "my_chart");
+        
+        // 2. 如果使用者按了「取消」或把名字清空，就中斷下載程序
+        if (fileName === null || fileName.trim() === "") {
+            return; 
+        }
+        
+        // 3. 自動幫檔名補上 .json 副檔名 (如果使用者沒自己打的話)
+        if (!fileName.endsWith(".json")) {
+            fileName += ".json";
+        }
+
+        // 4. 執行排序與下載
+        notes.sort((a,b) => a.time - b.time);
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(notes));
+        const dlAnchorEle = document.createElement('a');
+        dlAnchorEle.setAttribute("href", dataStr);
+        dlAnchorEle.setAttribute("download", fileName); // 套用剛剛輸入的檔名
+        document.body.appendChild(dlAnchorEle);
+        dlAnchorEle.click();
+        dlAnchorEle.remove();
+        
+        // 5. 提示完成
+        alert(`譜面 [ ${fileName} ] 已下載！`);
+    }
+
 
 </script>
 </body>
