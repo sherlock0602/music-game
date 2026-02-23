@@ -77,6 +77,20 @@
         #status-bar {
             position: absolute; bottom: 10px; left: 10px; font-size: 12px; color: #666; pointer-events: none;
         }
+/* 底部觸控按鈕區 */
+        #mobile-controls {
+            display: flex; height: 15%; min-height: 80px; background: #111; 
+            border-top: 1px solid #333; flex-shrink: 0; z-index: 20;
+        }
+        .lane-btn {
+            flex: 1; margin: 10px; font-size: 28px; font-weight: 900; 
+            border: 2px solid; border-radius: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            touch-action: manipulation; -webkit-user-select: none; user-select: none;
+            transition: 0.1s;
+        }
+        .lane-btn:active { filter: brightness(1.5); transform: scale(0.95); }
+
     </style>
 </head>
 <body>
@@ -130,6 +144,13 @@
     <div class="lane-guide" style="top:75%; height:25%;"><div class="lane-text">K</div></div>
     
     <canvas id="canvas"></canvas>
+</div>
+
+<div id="mobile-controls">
+    <div class="lane-btn" id="btn-d" style="background: rgba(255, 215, 0, 0.1); border-color: #FFD700; color: #FFD700;">D</div>
+    <div class="lane-btn" id="btn-f" style="background: rgba(0, 191, 255, 0.1); border-color: #00BFFF; color: #00BFFF;">F</div>
+    <div class="lane-btn" id="btn-j" style="background: rgba(0, 255, 136, 0.1); border-color: #00FF88; color: #00FF88;">J</div>
+    <div class="lane-btn" id="btn-k" style="background: rgba(189, 0, 255, 0.1); border-color: #BD00FF; color: #BD00FF;">K</div>
 </div>
 
 <script>
@@ -310,6 +331,31 @@
         }
         if(e.code === 'Space') { e.preventDefault(); togglePlay(); }
     });
+// --- 底部觸控按鈕錄製 ---
+    function addNoteFromButton(lane) {
+        const now = getCurrentTime();
+        // 防抖，避免重複觸發
+        if(!notes.find(n => n.lane === lane && Math.abs(n.time - now*1000) < 50)) {
+            notes.push({ time: Math.round(now * 1000), lane: lane, hit: false });
+            if(!isPlaying) draw();
+        }
+    }
+
+    // 幫四個按鈕綁定事件
+    ['d', 'f', 'j', 'k'].forEach((key, lane) => {
+        const btn = document.getElementById(`btn-${key}`);
+        const handler = (e) => {
+            e.preventDefault(); // 防止點擊時螢幕跟著滑動或放大
+            addNoteFromButton(lane);
+        };
+        // 同時支援滑鼠點擊與平板觸控
+        btn.addEventListener('mousedown', handler);
+        btn.addEventListener('touchstart', handler);
+    });
+
+
+
+
 
 // --- 觸控與點擊編輯 ---
     function handleEditorInput(clientX, clientY) {
