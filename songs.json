@@ -1,0 +1,16 @@
+[
+    {
+        "id": "track1",
+        "title": "輕鬆音樂",
+        "artist": "???",
+        "audio": "songs/track1/music.mp3",
+        "chart": "songs/track1/chart.json"
+    },
+    {
+        "id": "track2",
+        "title": "輕鬆音樂",
+        "artist": "???",
+        "audio": "songs/track2/music.mp3",
+        "chart": "songs/track2/chart.json"
+    }
+]
