@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>Neon Beat - Waveform Master V3</title>
     <style>
+       html, body {
+            /* 讓網頁絕對貼齊可用視窗，避開平板 100vh 的 Bug */
+            position: absolute; inset: 0; width: 100%; height: 100%;
+        }
         body { 
             background: #121212; color: #e0e0e0; font-family: 'Segoe UI', monospace; 
-            display: flex; flex-direction: column; height: 100vh; margin: 0; overflow: hidden;
+            display: flex; flex-direction: column; margin: 0; overflow: hidden;
         }
 
         /* 頂部工具列 */
