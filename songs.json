@@ -8,9 +8,27 @@
     },
     {
         "id": "track2",
-        "title": "輕鬆音樂",
+        "title": "工工工工",
         "artist": "???",
         "audio": "songs/track2/music.mp3",
         "chart": "songs/track2/chart.json"
+    },
+
+   {
+        "id": "track3",
+        "title": "讓風告訴你",
+        "artist": "???",
+        "audio": "songs/track3/music.mp3",
+        "chart": "songs/track3/chart.json"
+    },
+ {
+        "id": "track4",
+        "title": "蘑菇蘑菇",
+        "artist": "???",
+        "audio": "songs/track4/music.mp3",
+        "chart": "songs/track4/chart.json"
     }
+
+
+
 ]
