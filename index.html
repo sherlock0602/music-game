@@ -36,6 +36,36 @@
         #touch-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 25%; z-index: 20; display: flex; }
         .touch-zone { flex: 1; height: 100%; }
         canvas { display: block; position: absolute; inset: 0; z-index: 5; }
+
+        /* ================= 新增：選單捲軸樣式 ================= */
+        #song-list {
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            margin-top: 20px;
+            max-height: 55vh;     /* 限制選單最高佔螢幕的 55%，避免超出畫面 */
+            overflow-y: auto;     /* 內容過多時自動出現上下捲軸 */
+            padding-right: 10px;  /* 預留一點空間給捲軸，避免擋到文字 */
+            width: 90%;           /* 稍微限制寬度，讓畫面更集中 */
+            max-width: 400px;
+        }
+
+        /* 美化選單的捲軸 (針對平板 Safari/Chrome 與電腦版瀏覽器) */
+        #song-list::-webkit-scrollbar {
+            width: 8px; 
+        }
+        #song-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 4px;
+        }
+        #song-list::-webkit-scrollbar-thumb {
+            background: #00bcd4; 
+            border-radius: 4px;
+        }
+        #song-list::-webkit-scrollbar-thumb:hover {
+            background: #00acc1;
+        }
+        /* ==================================================== */
     </style>
 </head>
 <body>
@@ -43,7 +73,7 @@
 <div id="game-container">
     <div id="start-screen">
         <h1 style="font-size: 40px; text-shadow: 0 0 30px #0ff;">NEON SYNC</h1>
-           </div>
+    </div>
 
     <div id="ui-layer">
         <div class="hud-top">
@@ -56,8 +86,6 @@
         </div>
     </div>
 
-
-
     <canvas id="gameCanvas"></canvas>
 
     <div id="touch-layer">
@@ -69,7 +97,6 @@
 </div>
 
 <script>
-
 let CHART_DATA = [];
 const LEAD_TIME = 1300; 
 const LANE_COLORS = ['#FFD700', '#00BFFF', '#00FF88', '#BD00FF'];
@@ -92,7 +119,6 @@ let activeKeys = [false, false, false, false];
 let particles = [], stars = [];
 
 // 初始化
-
 function resize() {
     const rect = document.getElementById('game-container').getBoundingClientRect();
     canvas.width = rect.width;
@@ -109,11 +135,12 @@ async function initSongList() {
         const songs = await response.json();
         
         let html = '<h1 style="font-size: 40px; text-shadow: 0 0 30px #0ff;">NEON SYNC</h1>';
-        html += '<div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">';
+        // 這裡加上了剛剛設定的 id="song-list"
+        html += '<div id="song-list">';
         
         // 產生選歌按鈕
         songs.forEach(song => {
-            html += `<button style="padding: 15px 30px; font-size: 18px; background: #111; color: #0ff; border: 1px solid #0ff; cursor: pointer;" 
+            html += `<button style="padding: 15px 30px; font-size: 18px; background: #111; color: #0ff; border: 1px solid #0ff; cursor: pointer; border-radius: 8px;" 
                      onclick="loadAndStart('${song.audio}', '${song.chart}')">
                      🎵 ${song.title} - ${song.artist}
                      </button>`;
@@ -238,10 +265,10 @@ function gameLoop() {
         ctx.fillText(LANE_KEYS[i], pBot.x + pBot.w/2, pBot.y - 5);
     }
 
-// 判定線與判定區間
-    const windowMs = 80; // 配合你 handleInput 的判定範圍 160 毫秒
-    const progTop = 1 - (windowMs / LEAD_TIME); // 上限 (提早按的最極限)
-    const progBot = 1 + (windowMs / LEAD_TIME); // 下限 (太晚按的最極限)
+    // 判定線與判定區間
+    const windowMs = 80; 
+    const progTop = 1 - (windowMs / LEAD_TIME); 
+    const progBot = 1 + (windowMs / LEAD_TIME); 
 
     const topL = getCoords(0, progTop);
     const topR = getCoords(4, progTop);
@@ -249,11 +276,11 @@ function gameLoop() {
     const botR = getCoords(4, progBot);
 
     // 1. 畫判定區間的半透明發光背景
-    ctx.fillStyle = 'rgba(0, 255, 255, 0.15)'; // 淡淡的青色背景
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.15)'; 
     ctx.beginPath();
     ctx.moveTo(topL.x - 10, topL.y);
     ctx.lineTo(topR.x + 10, topR.y);
-    ctx.lineTo(botR.x + 20, botR.y); // 配合 3D 透視，下方稍微拉寬
+    ctx.lineTo(botR.x + 20, botR.y); 
     ctx.lineTo(botL.x - 20, botL.y);
     ctx.fill();
 
@@ -275,8 +302,7 @@ function gameLoop() {
     ctx.beginPath(); ctx.moveTo(hitL.x - 20, hitL.y); ctx.lineTo(hitR.x + 20, hitR.y); ctx.stroke();
     ctx.shadowBlur = 0; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
 
-
-// 音符
+    // 音符
     activeNotes.forEach(n => {
         if(n.hit) return;
         const hitTime = n.time + userOffset;
@@ -293,7 +319,7 @@ function gameLoop() {
             const g = ctx.createLinearGradient(0, pTail.y, 0, pHead.y);
             g.addColorStop(0, 'transparent'); 
             g.addColorStop(0.4, color); 
-            g.addColorStop(1, '#fff'); // 讓尾端稍微白一點保持立體感，但沒有那條硬線
+            g.addColorStop(1, '#fff'); 
             
             ctx.fillStyle = g;
             ctx.beginPath(); 
@@ -307,8 +333,6 @@ function gameLoop() {
             ctx.strokeStyle = color; 
             ctx.lineWidth = 1; 
             ctx.stroke();
-            
-            // *** 原本畫白線的程式碼已經移除了 ***
         }
 
         if(timeDiff < -200) {
@@ -377,13 +401,10 @@ function handleInput(lane, isDown) {
         } else {
             // --- 按空了 (找不到音符) ---
             combo = 0; 
-            // 扣 50 分，並確保分數不會變成負數
             score = Math.max(0, score - 50); 
             
             document.getElementById('combo-num').innerText = combo;
             document.getElementById('score').innerText = score.toString().padStart(6,'0');
-            
-            // 顯示紅色 BAD 判定
             showJudge("BAD", "#ff0000"); 
         }
     }
@@ -407,7 +428,3 @@ window.addEventListener('keyup', e=>{ const i=LANE_KEYS.indexOf(e.key.toUpperCas
 </script>
 </body>
 </html>
-
-
-
-
