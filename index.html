@@ -37,21 +37,29 @@
         .touch-zone { flex: 1; height: 100%; }
         canvas { display: block; position: absolute; inset: 0; z-index: 5; }
 
-        /* ================= 新增：選單捲軸樣式 ================= */
+ /* ================= 新增：選單捲軸樣式 ================= */
         #song-list {
             display: flex; 
             flex-direction: column; 
             gap: 10px; 
             margin-top: 20px;
-            max-height: 55vh;     /* 限制選單最高佔螢幕的 55% */
-            overflow-y: auto;     /* 內容過多時自動出現上下捲軸 */
+            max-height: 55vh;
+            overflow-y: auto;
             padding-right: 10px;  
             width: 90%;           
             max-width: 400px;
 
-            /* 👇 解除平板滑動封印的兩行魔法 👇 */
-            touch-action: pan-y;                 /* 允許手指「上下」滑動 */
-            -webkit-overflow-scrolling: touch;   /* 讓 iOS (iPad) 的滑動有原生的慣性滑順感 */
+            /* 允許手指「上下」滑動，並啟用流暢慣性 */
+            touch-action: pan-y;                 
+            -webkit-overflow-scrolling: touch;   
+            
+            /* 🌟 第一個解藥：防止 iPad 捲軸撞到底部時卡死 */
+            overscroll-behavior-y: contain; 
+        }
+
+        /* 🌟 第二個解藥：解除按鈕本身的滑動封印！(這段最重要) */
+        #song-list button {
+            touch-action: pan-y; 
         }
 
         /* 美化選單的捲軸 (針對平板 Safari/Chrome 與電腦版瀏覽器) */
