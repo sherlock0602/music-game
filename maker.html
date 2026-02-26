@@ -155,7 +155,8 @@
         <button onclick="setSpeed(1.0)" class="active" id="btn-speed-1">1.0x</button>
     </div>
     <div class="control-group">
-        <button onclick="downloadChart()">💾 下載譜面檔</button>
+        <button onclick="downloadChart()">💾 下載</button>
+        <button onclick="shareChart()" class="primary">📤 AirDrop / 分享</button>
     </div>
 </div>
 
@@ -578,6 +579,52 @@
         
         // 5. 提示完成
         alert(`譜面 [ ${fileName} ] 已下載！`);
+    }
+
+// --- 直接分享 (AirDrop / Line 等) ---
+    async function shareChart() {
+        // 1. 彈出視窗讓使用者輸入檔名
+        let fileName = prompt("請輸入你的座號與姓名（例如：1號_王小明）：", "my_chart");
+        
+        if (fileName === null || fileName.trim() === "") {
+            return; 
+        }
+        if (!fileName.endsWith(".json")) {
+            fileName += ".json";
+        }
+
+        // 2. 準備 JSON 檔案的內容
+        notes.sort((a,b) => a.time - b.time);
+        const jsonString = JSON.stringify(notes);
+        
+        // 3. 將文字打包成一個真正的「檔案 (File)」物件
+        const file = new File([jsonString], fileName, { type: "application/json" });
+
+        // 4. 檢查這台裝置的瀏覽器支不支援直接分享檔案
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                // 呼叫出 iOS/Android 系統內建的分享視窗
+                await navigator.share({
+                    files: [file],
+                    title: '繳交譜面作業',
+                    text: `這是 ${fileName} 的譜面檔案`
+                });
+                // 分享視窗關閉後不特別跳通知，避免干擾
+            } catch (error) {
+                console.log("分享取消或失敗", error);
+            }
+        } else {
+            // 防呆機制：如果是用桌上型電腦，或是瀏覽器太舊不支援 AirDrop，就退回原本的下載模式
+            alert("這台裝置不支援直接分享，將為您改為直接下載檔案！");
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(jsonString);
+            const dlAnchorEle = document.createElement('a');
+            dlAnchorEle.setAttribute("href", dataStr);
+            dlAnchorEle.setAttribute("download", fileName);
+            document.body.appendChild(dlAnchorEle);
+            dlAnchorEle.click();
+            dlAnchorEle.remove();
+        }
     }
 
 
