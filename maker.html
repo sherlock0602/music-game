@@ -265,7 +265,7 @@
     async function initMakerSongList() {
         const container = document.getElementById('song-list-container');
         try {
-            const response = await fetch('songs.json');
+            const response = await fetch('maker_songs.json');
             const songs = await response.json();
             
             let html = '';
