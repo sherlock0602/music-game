@@ -320,6 +320,11 @@
     function play() {
         if(isPlaying) return;
         
+        // 🌟 解藥一：喚醒被平板/瀏覽器強制休眠的音效引擎
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
         sourceNode = audioCtx.createBufferSource();
         sourceNode.buffer = audioBuffer;
         sourceNode.playbackRate.value = playbackRate;
@@ -431,7 +436,47 @@
         btn.addEventListener('touchstart', handler);
     });
 
+// --- 新增：點擊畫布直接新增/刪除音符 ---
+    function handleCanvasTap(clientX, clientY) {
+        if (isPlaying) return; // 為了精準度，規定只能在「暫停」狀態下點擊編輯
 
+        const rect = canvas.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        const w = canvas.width;
+        const h = canvas.height;
+        const laneH = h / 4;
+        const clickedLane = Math.floor(y / laneH); // 算出你點擊了哪一軌 (D, F, J, K)
+
+        const nowMs = getCurrentTime() * 1000;
+        const msPerPx = TIME_WINDOW / w;
+        const startMs = nowMs - (TIME_WINDOW / 2);
+
+        // 換算出你點擊位置的「時間點」
+        const clickedTime = startMs + (x * msPerPx);
+
+        // 尋找你點擊位置附近 (誤差 100 毫秒內) 有沒有已經存在的音符
+        const noteIndex = notes.findIndex(n => n.lane === clickedLane && Math.abs(n.time - clickedTime) < 100);
+
+        if (noteIndex !== -1) {
+            // 🎯 如果點到了音符 -> 刪除它！(橡皮擦)
+            notes.splice(noteIndex, 1);
+        } else {
+            // ➕ 如果點到空白處 -> 精準新增一個音符！
+            notes.push({ time: Math.round(clickedTime), lane: clickedLane, hit: false });
+        }
+        draw(); // 立刻更新畫面
+    }
+
+    // 讓畫布同時支援「滑鼠點擊」與「平板觸控」
+    canvas.addEventListener('mousedown', (e) => {
+        handleCanvasTap(e.clientX, e.clientY);
+    });
+    canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // 防止平板畫面跟著滑動
+        handleCanvasTap(e.touches[0].clientX, e.touches[0].clientY);
+    });
 
     // --- 5. 繪圖核心 ---
     function getCurrentTime() {
