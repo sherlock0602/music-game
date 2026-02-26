@@ -118,18 +118,28 @@
 <body>
 
 <div id="overlay">
-<div id="init-box">
+    <div id="init-box">
         <h1 style="color:#fff; margin-bottom:10px;">NEON MAKER <span style="color:#00bcd4; font-size:16px;">V3</span></h1>
-        <p style="color:#888; margin-bottom:30px;">高對比波形視覺化編輯器</p>
+        <p style="color:#888; margin-bottom:20px;">高對比波形視覺化編輯器</p>
         
-        <label for="file-input" style="background: #00bcd4; color: #000; padding: 15px 40px; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer; display: inline-block;">
-            📂 選擇 MP3 音樂
+        <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; border: 1px solid #333; margin-bottom: 20px; width: 100%; max-width: 400px; text-align: left;">
+            <p style="color: #0ff; margin-top: 0; font-weight: bold; text-align: center;">☁️ 選擇線上曲目</p>
+            <div id="song-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+                <p style="color: #888; text-align: center;">讀取歌單中...</p>
+            </div>
+        </div>
+
+        <p style="color:#888; margin-bottom:15px; font-size: 12px;">- 或 -</p>
+
+        <label for="file-input" style="background: #333; color: #fff; padding: 12px 30px; font-size: 16px; border-radius: 4px; cursor: pointer; display: inline-block; border: 1px solid #555;">
+            📁 選擇本機 MP3
         </label>
-        
         <input type="file" id="file-input" accept="audio/*, audio/mpeg, .mp3, .wav" onchange="loadAudio(this)" style="opacity: 0; position: absolute; z-index: -1;">
-    </div>    <div id="loading-box">
+    </div>
+    
+    <div id="loading-box">
         <div class="spinner"></div>
-        <div id="loading-msg" style="color:#fff; font-size:18px;">正在解析波形...</div>
+        <p style="color:#00bcd4; font-weight:bold;">音訊解析中，請稍候...</p>
     </div>
 </div>
 
@@ -199,36 +209,79 @@
     const timeDisp = document.getElementById('time-display');
     const statusDiv = document.getElementById('status-bar');
 
-    // --- 1. 檔案載入與解析 ---
-    async function loadAudio(input) {
-        if (!input.files.length) return;
-        const file = input.files[0];
-
-        // UI 切換
+ // --- 1. 檔案載入與解析 (支援線上與本機) ---
+    
+    // 共用的音訊解碼核心
+    async function processAudioBuffer(arrayBuffer) {
         document.getElementById('init-box').style.display = 'none';
         document.getElementById('loading-box').style.display = 'block';
-
         try {
-            const arrayBuffer = await file.arrayBuffer();
-            // 解碼音訊
             audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-            
-            // 處理波形
             generateWaveform();
-            
-            // 完成
             slider.max = audioBuffer.duration;
             document.getElementById('overlay').style.display = 'none';
             resize();
             draw();
             statusDiv.innerText = `載入成功: ${audioBuffer.duration.toFixed(1)}秒 | 波形點數: ${waveform.length}`;
-
         } catch (e) {
             console.error(e);
-            alert("檔案解析失敗！請確認是正常的 MP3/WAV 檔案。");
+            alert("音訊解碼失敗！");
             location.reload();
         }
     }
+
+    // A. 從本機選擇檔案
+    async function loadAudio(input) {
+        if (!input.files.length) return;
+        const file = input.files[0];
+        document.getElementById('init-box').style.display = 'none';
+        document.getElementById('loading-box').style.display = 'block';
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            await processAudioBuffer(arrayBuffer);
+        } catch (e) {
+            alert("讀取本機檔案失敗！");
+            location.reload();
+        }
+    }
+
+    // B. 從線上網址讀取
+    async function loadAudioFromUrl(url) {
+        document.getElementById('init-box').style.display = 'none';
+        document.getElementById('loading-box').style.display = 'block';
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("網路請求失敗");
+            const arrayBuffer = await response.arrayBuffer();
+            await processAudioBuffer(arrayBuffer);
+        } catch (e) {
+            console.error(e);
+            alert("下載線上音樂失敗！請確認網址正確或網路連線正常。");
+            location.reload();
+        }
+    }
+
+    // C. 初始化讀取 songs.json 歌單
+    async function initMakerSongList() {
+        const container = document.getElementById('song-list-container');
+        try {
+            const response = await fetch('songs.json');
+            const songs = await response.json();
+            
+            let html = '';
+            songs.forEach(song => {
+                html += `<button onclick="loadAudioFromUrl('${song.audio}')" style="background: #00bcd4; color: #000; padding: 12px; font-size: 16px; font-weight: bold; border: none; cursor: pointer; border-radius: 4px;">
+                            🎵 ${song.title}
+                         </button>`;
+            });
+            container.innerHTML = html;
+        } catch (e) {
+            container.innerHTML = '<p style="color:#ff5555; text-align:center;">無法讀取線上歌單，<br>請使用下方按鈕選擇本機檔案。</p>';
+        }
+    }
+    
+    // 網頁載入時立刻去抓歌單
+    initMakerSongList();
 
     // --- 2. 波形生成 (V3: 正規化 + 高對比) ---
     function generateWaveform() {
@@ -377,49 +430,6 @@
 
 
 
-
-
-// --- 觸控與點擊編輯 ---
-    function handleEditorInput(clientX, clientY) {
-        const rect = canvas.getBoundingClientRect();
-        const x = clientX - rect.left;
-        const y = clientY - rect.top;
-        
-        const laneH = canvas.height / 4;
-        const lane = Math.floor(y / laneH);
-        
-        const now = getCurrentTime();
-        const widthMs = TIME_WINDOW;
-        const msPerPx = widthMs / canvas.width;
-        
-        const centerX = canvas.width / 2;
-        const offsetMs = (x - centerX) * msPerPx;
-        const clickTimeMs = (now * 1000) + offsetMs;
-
-        const hitIdx = notes.findIndex(n => n.lane === lane && Math.abs(n.time - clickTimeMs) < 150);
-
-        if(hitIdx !== -1) {
-            notes.splice(hitIdx, 1); 
-        } else {
-            if(clickTimeMs >= 0) {
-                notes.push({ time: Math.round(clickTimeMs), lane: lane, hit: false }); 
-            }
-        }
-        if(!isPlaying) draw();
-    }
-
-    // 綁定滑鼠事件
-    canvas.addEventListener('mousedown', (e) => {
-        handleEditorInput(e.clientX, e.clientY);
-    });
-
-    // 綁定觸控事件
-    canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // 防止平板預設的滑動行為
-        if (e.touches.length > 0) {
-            handleEditorInput(e.touches[0].clientX, e.touches[0].clientY);
-        }
-    });
     // --- 5. 繪圖核心 ---
     function getCurrentTime() {
         if(isPlaying) {
