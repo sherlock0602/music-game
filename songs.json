@@ -28,11 +28,12 @@
         "chart": "charts/test01.json"
     },
     {
-        "id": "test5",
-        "title": "zzzz",
-        "artist": "???",
-        "audio": "audio/zzzz.mp3",
-        "chart": "charts/zzzz.json"
+        "id": "22",
+        "title": "Be what you wanna be",
+        "artist": "22",
+        "audio": "audio/Be what you wanna be.mp3",
+        "chart": "charts/Be what you wanna be.json"
     }
 
 ]
+
