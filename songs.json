@@ -7,25 +7,151 @@
         "chart": "charts/test01.json"
     },
     {
-        "id": "test02",
-        "title": "工工工工",
-        "artist": "???",
-        "audio": "audio/工工工工.mp3",
-        "chart": "charts/test01.json"
+        "id": " ",
+        "title": "    ",
+        "artist": " ",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    }
+    {
+        "id": "1",
+        "title": "    ",
+        "artist": "1",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
     },
     {
-        "id": "test03",
-        "title": "讓風告訴你",
-        "artist": "???",
-        "audio": "audio/讓風告訴你.mp3",
-        "chart": "charts/test01.json"
+        "id": "2",
+        "title": "    ",
+        "artist": "2",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
     },
     {
-        "id": "test4",
-        "title": "蘑菇蘑菇",
-        "artist": "???",
-        "audio": "audio/蘑菇蘑菇.mp3",
-        "chart": "charts/test01.json"
+        "id": "3",
+        "title": "    ",
+        "artist": "3",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "4",
+        "title": "    ",
+        "artist": "4",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "5",
+        "title": "    ",
+        "artist": "5",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "6",
+        "title": "    ",
+        "artist": "6",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "7",
+        "title": "    ",
+        "artist": "7",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "8",
+        "title": "    ",
+        "artist": "8",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "9",
+        "title": "    ",
+        "artist": "9",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "10",
+        "title": "    ",
+        "artist": "10",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "11",
+        "title": "    ",
+        "artist": "11",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "12",
+        "title": "    ",
+        "artist": "12",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "13",
+        "title": "    ",
+        "artist": "13",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "15",
+        "title": "    ",
+        "artist": "15",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "16",
+        "title": "    ",
+        "artist": "16",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "17",
+        "title": "    ",
+        "artist": "17",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "18",
+        "title": "    ",
+        "artist": "18",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "19",
+        "title": "    ",
+        "artist": "19",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "20",
+        "title": "    ",
+        "artist": "20",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "21",
+        "title": "    ",
+        "artist": "21",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
     },
     {
         "id": "22",
@@ -33,7 +159,30 @@
         "artist": "22",
         "audio": "audio/Be what you wanna be.mp3",
         "chart": "charts/Be what you wanna be.json"
+    },
+    {
+        "id": "23",
+        "title": "    ",
+        "artist": "23",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "24",
+        "title": "    ",
+        "artist": "24",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
+    },
+    {
+        "id": "25",
+        "title": "    ",
+        "artist": "25",
+        "audio": "audio/.mp3",
+        "chart": "charts/.json"
     }
 
+
 ]
+
 
