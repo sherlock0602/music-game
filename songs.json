@@ -26,6 +26,13 @@
         "artist": "???",
         "audio": "audio/蘑菇蘑菇.mp3",
         "chart": "charts/test01.json"
+    },
+    {
+        "id": "test5",
+        "title": "zzzz",
+        "artist": "???",
+        "audio": "audio/zzzz.mp3",
+        "chart": "charts/zzzz.json"
     }
 
 
