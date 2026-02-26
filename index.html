@@ -238,11 +238,40 @@ function gameLoop() {
         ctx.fillText(LANE_KEYS[i], pBot.x + pBot.w/2, pBot.y - 5);
     }
 
-    // 判定線
+// 判定線與判定區間
+    const windowMs = 160; // 配合你 handleInput 的判定範圍 160 毫秒
+    const progTop = 1 - (windowMs / LEAD_TIME); // 上限 (提早按的最極限)
+    const progBot = 1 + (windowMs / LEAD_TIME); // 下限 (太晚按的最極限)
+
+    const topL = getCoords(0, progTop);
+    const topR = getCoords(4, progTop);
+    const botL = getCoords(0, progBot);
+    const botR = getCoords(4, progBot);
+
+    // 1. 畫判定區間的半透明發光背景
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.15)'; // 淡淡的青色背景
+    ctx.beginPath();
+    ctx.moveTo(topL.x - 10, topL.y);
+    ctx.lineTo(topR.x + 10, topR.y);
+    ctx.lineTo(botR.x + 20, botR.y); // 配合 3D 透視，下方稍微拉寬
+    ctx.lineTo(botL.x - 20, botL.y);
+    ctx.fill();
+
+    // 2. 畫上下兩條判定邊界線 (細線)
+    ctx.strokeStyle = 'rgba(0, 255, 255, 0.4)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(topL.x - 10, topL.y); ctx.lineTo(topR.x + 10, topR.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(botL.x - 20, botL.y); ctx.lineTo(botR.x + 20, botR.y);
+    ctx.stroke();
+
+    // 3. 畫原本中心的完美判定線 (粗線 + 強烈發光)
     const hitL = getCoords(0, 1.0);
     const hitR = getCoords(4, 1.0);
-    ctx.shadowBlur = 25; ctx.shadowColor = '#00ffff';
-    ctx.strokeStyle = 'rgba(0,255,255,0.8)'; ctx.lineWidth = 4;
+    ctx.shadowBlur = 20; ctx.shadowColor = '#00ffff';
+    ctx.strokeStyle = 'rgba(0,255,255,0.9)'; ctx.lineWidth = 4;
     ctx.beginPath(); ctx.moveTo(hitL.x - 20, hitL.y); ctx.lineTo(hitR.x + 20, hitR.y); ctx.stroke();
     ctx.shadowBlur = 0; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
 
@@ -378,5 +407,6 @@ window.addEventListener('keyup', e=>{ const i=LANE_KEYS.indexOf(e.key.toUpperCas
 </script>
 </body>
 </html>
+
 
 
