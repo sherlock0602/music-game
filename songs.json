@@ -7,183 +7,177 @@
         "chart": "charts/test01.json"
     },
     {
-        "id": " ",
-        "title": "    ",
-        "artist": " ",
-        "audio": "audio/.mp3",
-        "chart": "charts/.json"
-    },
-    {
         "id": "1",
         "title": "    ",
         "artist": "1",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/1.json"
     },
     {
         "id": "2",
         "title": "    ",
         "artist": "2",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/2.json"
     },
     {
         "id": "3",
         "title": "    ",
         "artist": "3",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/3.json"
     },
     {
         "id": "4",
         "title": "    ",
         "artist": "4",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/4.json"
     },
     {
         "id": "5",
         "title": "    ",
         "artist": "5",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/5.json"
     },
     {
         "id": "6",
         "title": "    ",
         "artist": "6",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/6.json"
     },
     {
         "id": "7",
         "title": "    ",
         "artist": "7",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/7.json"
     },
     {
         "id": "8",
         "title": "    ",
         "artist": "8",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/8.json"
     },
     {
         "id": "9",
         "title": "    ",
         "artist": "9",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/9.json"
     },
     {
         "id": "10",
         "title": "    ",
         "artist": "10",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/10.json"
     },
     {
         "id": "11",
         "title": "    ",
         "artist": "11",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/11.json"
     },
     {
         "id": "12",
         "title": "    ",
         "artist": "12",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/12.json"
     },
     {
         "id": "13",
         "title": "    ",
         "artist": "13",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/13.json"
     },
     {
         "id": "15",
         "title": "    ",
         "artist": "15",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/15.json"
     },
     {
         "id": "16",
         "title": "    ",
         "artist": "16",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/16.json"
     },
     {
         "id": "17",
         "title": "    ",
         "artist": "17",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/17.json"
     },
     {
         "id": "18",
         "title": "    ",
         "artist": "18",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/18.json"
     },
     {
         "id": "19",
         "title": "    ",
         "artist": "19",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/19.json"
     },
     {
         "id": "20",
         "title": "    ",
         "artist": "20",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/20.json"
     },
     {
         "id": "21",
         "title": "    ",
         "artist": "21",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/21.json"
     },
     {
         "id": "22",
         "title": "Be what you wanna be",
         "artist": "22",
         "audio": "audio/Be what you wanna be.mp3",
-        "chart": "charts/Be what you wanna be.json"
+        "chart": "charts/22.json"
     },
     {
         "id": "23",
         "title": "    ",
         "artist": "23",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/23.json"
     },
     {
         "id": "24",
         "title": "    ",
         "artist": "24",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/24.json"
     },
     {
         "id": "25",
         "title": "    ",
         "artist": "25",
         "audio": "audio/.mp3",
-        "chart": "charts/.json"
+        "chart": "charts/25.json"
     }
 
 
 ]
+
 
 
 
