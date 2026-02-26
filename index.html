@@ -239,7 +239,7 @@ function gameLoop() {
     }
 
 // 判定線與判定區間
-    const windowMs = 160; // 配合你 handleInput 的判定範圍 160 毫秒
+    const windowMs = 80; // 配合你 handleInput 的判定範圍 160 毫秒
     const progTop = 1 - (windowMs / LEAD_TIME); // 上限 (提早按的最極限)
     const progBot = 1 + (windowMs / LEAD_TIME); // 下限 (太晚按的最極限)
 
@@ -407,6 +407,7 @@ window.addEventListener('keyup', e=>{ const i=LANE_KEYS.indexOf(e.key.toUpperCas
 </script>
 </body>
 </html>
+
 
 
 
