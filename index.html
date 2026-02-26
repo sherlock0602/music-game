@@ -43,11 +43,15 @@
             flex-direction: column; 
             gap: 10px; 
             margin-top: 20px;
-            max-height: 55vh;     /* 限制選單最高佔螢幕的 55%，避免超出畫面 */
+            max-height: 55vh;     /* 限制選單最高佔螢幕的 55% */
             overflow-y: auto;     /* 內容過多時自動出現上下捲軸 */
-            padding-right: 10px;  /* 預留一點空間給捲軸，避免擋到文字 */
-            width: 90%;           /* 稍微限制寬度，讓畫面更集中 */
+            padding-right: 10px;  
+            width: 90%;           
             max-width: 400px;
+
+            /* 👇 解除平板滑動封印的兩行魔法 👇 */
+            touch-action: pan-y;                 /* 允許手指「上下」滑動 */
+            -webkit-overflow-scrolling: touch;   /* 讓 iOS (iPad) 的滑動有原生的慣性滑順感 */
         }
 
         /* 美化選單的捲軸 (針對平板 Safari/Chrome 與電腦版瀏覽器) */
