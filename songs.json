@@ -22,9 +22,9 @@
     },
     {
         "id": "3",
-        "title": "    ",
+        "title": " 雙語國民健身操 ",
         "artist": "3",
-        "audio": "audio/.mp3",
+        "audio": "audio/雙語國民健身操.mp3",
         "chart": "charts/3.json"
     },
     {
@@ -50,30 +50,30 @@
     },
     {
         "id": "7",
-        "title": "雙語國民健身操",
+        "title": "蘑菇蘑菇",
         "artist": "7",
-        "audio": "audio/雙語國民健身操.mp3",
+        "audio": "audio/蘑菇蘑菇.mp3",
         "chart": "charts/7.json"
     },
     {
         "id": "8",
-        "title": "    ",
+        "title": "蘑菇蘑菇",
         "artist": "8",
-        "audio": "audio/.mp3",
+        "audio": "audio/蘑菇蘑菇.mp3",
         "chart": "charts/8.json"
     },
     {
         "id": "9",
-        "title": "Be what you wanna be",
+        "title": "輕鬆音樂",
         "artist": "9",
-        "audio": "audio/Be what you wanna be.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/9.json"
     },
     {
         "id": "10",
-        "title": "    ",
+        "title": "  雙語國民健身操  ",
         "artist": "10",
-        "audio": "audio/.mp3",
+        "audio": "audio/雙語國民健身操.mp3",
         "chart": "charts/10.json"
     },
     {
@@ -85,9 +85,9 @@
     },
     {
         "id": "12",
-        "title": "    ",
+        "title": " be what you wanna be ",
         "artist": "12",
-        "audio": "audio/.mp3",
+        "audio": "audio/be what you wanna be.mp3",
         "chart": "charts/12.json"
     },
     {
@@ -169,14 +169,15 @@
     },
     {
         "id": "25",
-        "title": "Be what you wanna be",
+        "title": "花與劍的輪舞",
         "artist": "25",
-        "audio": "audio/Be what you wanna be.mp3",
+        "audio": "audio/花與劍的輪舞.mp3",
         "chart": "charts/25.json"
     }
 
 
 ]
+
 
 
 
