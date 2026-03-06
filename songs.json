@@ -43,7 +43,7 @@
     },
     {
         "id": "6",
-        "title": " 黃金傳說 ",
+        "title": " 輕鬆音樂 ",
         "artist": "6",
         "audio": "audio/黃金傳說.mp3",
         "chart": "charts/6.json"
@@ -177,6 +177,7 @@
 
 
 ]
+
 
 
 
