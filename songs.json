@@ -8,9 +8,9 @@
     },
     {
         "id": "1",
-        "title": "讓風告訴你",
+        "title": "輕鬆音樂",
         "artist": "1",
-        "audio": "audio/讓風告訴你.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/1.json"
     },
     {
@@ -92,9 +92,9 @@
     },
     {
         "id": "13",
-        "title": "雙語國民健身操",
+        "title": "輕鬆音樂",
         "artist": "13",
-        "audio": "audio/雙語國民健身操.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/13.json"
     },
     {
@@ -106,9 +106,9 @@
     },
     {
         "id": "16",
-        "title": "    ",
+        "title": " 輕鬆音樂 ",
         "artist": "16",
-        "audio": "audio/.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/16.json"
     },
     {
@@ -162,9 +162,9 @@
     },
     {
         "id": "24",
-        "title": "    ",
+        "title": " 輕鬆音樂 ",
         "artist": "24",
-        "audio": "audio/.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/24.json"
     },
     {
@@ -177,6 +177,7 @@
 
 
 ]
+
 
 
 
