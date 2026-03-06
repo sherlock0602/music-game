@@ -36,9 +36,9 @@
     },
     {
         "id": "5",
-        "title": "Be what you wanna be",
+        "title": "輕鬆音樂",
         "artist": "5",
-        "audio": "audio/Be what you wanna be.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/5.json"
     },
     {
@@ -177,6 +177,7 @@
 
 
 ]
+
 
 
 
