@@ -1,0 +1,17 @@
+maker_songs.json
+填寫創作模式資料
+
+songs.json
+填寫遊戲模式資料
+
+audio
+放入想使用的音樂
+
+charts
+放入創作者設定的音樂節拍譜
+
+maker.html 
+創作模式介面
+
+index.html
+遊戲模式
