@@ -78,9 +78,9 @@
     },
     {
         "id": "11",
-        "title": "    ",
+        "title": " be what you wanna be ",
         "artist": "11",
-        "audio": "audio/.mp3",
+        "audio": "audio/be what you wanna be.mp3",
         "chart": "charts/11.json"
     },
     {
@@ -99,9 +99,9 @@
     },
     {
         "id": "15",
-        "title": "雙語國民健身操",
+        "title": "輕鬆音樂",
         "artist": "15",
-        "audio": "audio/雙語國民健身操.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/15.json"
     },
     {
@@ -127,9 +127,9 @@
     },
     {
         "id": "19",
-        "title": "    ",
+        "title": " 工工工工 ",
         "artist": "19",
-        "audio": "audio/.mp3",
+        "audio": "audio/工工工工.mp3",
         "chart": "charts/19.json"
     },
     {
@@ -177,6 +177,7 @@
 
 
 ]
+
 
 
 
