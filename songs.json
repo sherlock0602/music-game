@@ -141,9 +141,9 @@
     },
     {
         "id": "21",
-        "title": "    ",
+        "title": " 工工工工 ",
         "artist": "21",
-        "audio": "audio/.mp3",
+        "audio": "audio/工工工工.mp3",
         "chart": "charts/21.json"
     },
     {
@@ -155,9 +155,9 @@
     },
     {
         "id": "23",
-        "title": "    ",
+        "title": " 輕鬆音樂 ",
         "artist": "23",
-        "audio": "audio/.mp3",
+        "audio": "audio/黃金傳說.mp3",
         "chart": "charts/23.json"
     },
     {
@@ -177,6 +177,7 @@
 
 
 ]
+
 
 
 
