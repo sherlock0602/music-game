@@ -341,7 +341,7 @@ function showResult() {
     // 計算準度：Perfect 算 100%，Good 算 50%，防呆避免總音符數為 0
     let accuracy = 0;
     if (totalNotes > 0) {
-        accuracy = ((perfectCount + goodCount * 0.5) / totalNotes) * 100;
+        accuracy = ((perfectCount + goodCount * 0.8) / totalNotes) * 100;
     }
     document.getElementById('res-acc').innerText = accuracy.toFixed(2) + '%';
 }
@@ -428,4 +428,5 @@ window.addEventListener('keydown', e=>{ const i=LANE_KEYS.indexOf(e.key.toUpperC
 window.addEventListener('keyup', e=>{ const i=LANE_KEYS.indexOf(e.key.toUpperCase()); if(i>=0) handleInput(i,false); });
 </script>
 </body>
+
 </html>
