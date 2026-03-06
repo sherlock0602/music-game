@@ -17,7 +17,7 @@
         "id": "2",
         "title": "Be what you wanna be",
         "artist": "2",
-        "audio": "audio/Be what you wanna be.mp3",
+        "audio": "audio/be what you wanna be.mp3",
         "chart": "charts/2.json"
     },
     {
@@ -177,6 +177,7 @@
 
 
 ]
+
 
 
 
