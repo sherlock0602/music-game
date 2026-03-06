@@ -26,58 +26,30 @@
         #combo-num { font-size: 90px; font-weight: 900; margin: 0; color: #fff; text-shadow: 0 0 30px rgba(0,255,255,0.5); font-style: italic; transform: scale(1); transition: transform 0.05s; }
         #judgement { font-size: 36px; font-weight: 900; letter-spacing: 3px; opacity: 0; text-shadow: 0 0 20px currentColor; margin-top: 5px; }
         
-        #offset-controls { position: absolute; bottom: 35%; width: 100%; text-align: center; pointer-events: auto; z-index: 50; display: flex; flex-direction: column; align-items: center; opacity: 0.8; }
-        #offset-label { font-size: 12px; color: #aaa; margin-bottom: 5px; text-shadow: 0 0 5px #000; }
-        input[type=range] { width: 60%; accent-color: #0ff; cursor: pointer; height: 5px; }
-
         #start-screen { position: absolute; inset: 0; z-index: 100; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #start-btn { margin-top: 30px; padding: 15px 50px; font-size: 20px; background: #0ff; color: #000; border: none; font-weight: 900; box-shadow: 0 0 30px #0ff; cursor: pointer; }
+        
+        /* === 新增：結算畫面樣式 === */
+        #result-screen { position: absolute; inset: 0; z-index: 110; background: rgba(0, 0, 0, 0.85); display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .result-title { font-size: 50px; color: #0ff; text-shadow: 0 0 30px #0ff; margin-bottom: 30px; letter-spacing: 5px; }
+        .result-item { font-size: 24px; margin: 10px 0; display: flex; justify-content: space-between; width: 250px; border-bottom: 1px solid rgba(0,255,255,0.2); padding-bottom: 5px; }
+        .result-item span { font-weight: bold; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        #btn-back { margin-top: 40px; padding: 15px 40px; font-size: 20px; background: transparent; color: #0ff; border: 2px solid #0ff; font-weight: 900; cursor: pointer; border-radius: 8px; transition: 0.3s; }
+        #btn-back:hover { background: #0ff; color: #000; box-shadow: 0 0 20px #0ff; }
 
         #touch-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 25%; z-index: 20; display: flex; }
         .touch-zone { flex: 1; height: 100%; }
         canvas { display: block; position: absolute; inset: 0; z-index: 5; }
 
- /* ================= 新增：選單捲軸樣式 ================= */
         #song-list {
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            margin-top: 20px;
-            max-height: 55vh;
-            overflow-y: auto;
-            padding-right: 10px;  
-            width: 90%;           
-            max-width: 400px;
-
-            /* 允許手指「上下」滑動，並啟用流暢慣性 */
-            touch-action: pan-y;                 
-            -webkit-overflow-scrolling: touch;   
-            
-            /* 🌟 第一個解藥：防止 iPad 捲軸撞到底部時卡死 */
-            overscroll-behavior-y: contain; 
+            display: flex; flex-direction: column; gap: 10px; margin-top: 20px;
+            max-height: 55vh; overflow-y: auto; padding-right: 10px; width: 90%; max-width: 400px;
+            touch-action: pan-y; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; 
         }
-
-        /* 🌟 第二個解藥：解除按鈕本身的滑動封印！(這段最重要) */
-        #song-list button {
-            touch-action: pan-y; 
-        }
-
-        /* 美化選單的捲軸 (針對平板 Safari/Chrome 與電腦版瀏覽器) */
-        #song-list::-webkit-scrollbar {
-            width: 8px; 
-        }
-        #song-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05); 
-            border-radius: 4px;
-        }
-        #song-list::-webkit-scrollbar-thumb {
-            background: #00bcd4; 
-            border-radius: 4px;
-        }
-        #song-list::-webkit-scrollbar-thumb:hover {
-            background: #00acc1;
-        }
-        /* ==================================================== */
+        #song-list button { touch-action: pan-y; }
+        #song-list::-webkit-scrollbar { width: 8px; }
+        #song-list::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
+        #song-list::-webkit-scrollbar-thumb { background: #00bcd4; border-radius: 4px; }
+        #song-list::-webkit-scrollbar-thumb:hover { background: #00acc1; }
     </style>
 </head>
 <body>
@@ -85,6 +57,16 @@
 <div id="game-container">
     <div id="start-screen">
         <h1 style="font-size: 40px; text-shadow: 0 0 30px #0ff;">NEON SYNC</h1>
+    </div>
+
+    <div id="result-screen">
+        <div class="result-title">STAGE CLEAR</div>
+        <div class="result-item">SCORE: <span id="res-score">000000</span></div>
+        <div class="result-item">ACCURACY: <span id="res-acc">0.00%</span></div>
+        <div class="result-item" style="font-size: 18px; color: #0ff;">PERFECT: <span id="res-perfect">0</span></div>
+        <div class="result-item" style="font-size: 18px; color: #ff0;">GOOD: <span id="res-good">0</span></div>
+        <div class="result-item" style="font-size: 18px; color: #555;">MISS: <span id="res-miss">0</span></div>
+        <button id="btn-back" onclick="backToMenu()">BACK TO MENU</button>
     </div>
 
     <div id="ui-layer">
@@ -121,7 +103,7 @@ const BTN_Y = 0.92;
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-let userOffset = -50;  // 負數代表方塊提早到達，正數代表延後到達
+let userOffset = -50;  
 
 let audio = new Audio();
 let isPlaying = false;
@@ -130,16 +112,22 @@ let combo = 0, score = 0;
 let activeKeys = [false, false, false, false];
 let particles = [], stars = [];
 
-// 初始化
+// === 新增：統計變數 ===
+let totalNotes = 0;
+let perfectCount = 0;
+let goodCount = 0;
+let badCount = 0;
+let missCount = 0;
+
 function resize() {
     const rect = document.getElementById('game-container').getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
 }
 
-// 初始化時讀取選歌清單
 async function initSongList() {
     const startScreen = document.getElementById('start-screen');
+    startScreen.style.display = 'flex'; // 確保顯示選單
     startScreen.innerHTML = '<h1 style="font-size: 40px; text-shadow: 0 0 30px #0ff;">NEON SYNC</h1><p>載入歌曲清單中...</p>';
 
     try {
@@ -147,10 +135,8 @@ async function initSongList() {
         const songs = await response.json();
         
         let html = '<h1 style="font-size: 40px; text-shadow: 0 0 30px #0ff;">NEON SYNC</h1>';
-        // 這裡加上了剛剛設定的 id="song-list"
         html += '<div id="song-list">';
         
-        // 產生選歌按鈕
         songs.forEach(song => {
             html += `<button style="padding: 15px 30px; font-size: 18px; background: #111; color: #0ff; border: 1px solid #0ff; cursor: pointer; border-radius: 8px;" 
                      onclick="loadAndStart('${song.audio}', '${song.chart}')">
@@ -165,17 +151,22 @@ async function initSongList() {
     }
 }
 
-// 點擊歌曲後讀取資源並開始遊戲
 async function loadAndStart(audioUrl, chartUrl) {
     const startScreen = document.getElementById('start-screen');
     startScreen.innerHTML = '<h1 style="font-size: 30px;">資源載入中...</h1>';
     
     try {
-        // 讀取該首歌曲的譜面
         const response = await fetch(chartUrl);
         CHART_DATA = await response.json();
         
-        // 設定音樂並開始
+        // === 新增：重置所有統計資料 ===
+        combo = 0; score = 0;
+        perfectCount = 0; goodCount = 0; badCount = 0; missCount = 0;
+        totalNotes = CHART_DATA.length;
+        document.getElementById('combo-num').innerText = '0';
+        document.getElementById('score').innerText = '000000';
+        document.getElementById('result-screen').style.display = 'none';
+        
         audio.src = audioUrl;
         document.getElementById('start-screen').style.display = 'none';
         
@@ -186,19 +177,17 @@ async function loadAndStart(audioUrl, chartUrl) {
 
     } catch (e) {
         alert("讀取譜面或音樂失敗，請檢查檔案路徑！");
-        initSongList(); // 失敗退回選歌畫面
+        initSongList(); 
     }
 }
 
-// 覆寫原本的 onload
 window.onload = () => {
     resize();
     window.addEventListener('resize', resize);
     initStars();
-    initSongList(); // 啟動選歌清單
+    initSongList(); 
 };
 
-// 繪圖座標計算
 function getCoords(lane, progress) {
     const yStart = canvas.height * VANISH_Y;
     const yHit = canvas.height * HIT_Y;
@@ -229,19 +218,21 @@ function gameLoop() {
     if(!isPlaying) return;
     const now = audio.currentTime * 1000;
 
-    // UI 更新
     let rem = Math.max(0, audio.duration - audio.currentTime);
     const m = Math.floor(rem/60).toString().padStart(2,'0');
     const s = Math.floor(rem%60).toString().padStart(2,'0');
     document.getElementById('timer').innerText = `${m}:${s}`;
-    if(audio.ended) isPlaying = false;
+    
+    // === 修改：音樂結束時觸發結算畫面 ===
+    if(audio.ended && isPlaying) {
+        isPlaying = false;
+        showResult();
+        return; // 結束迴圈
+    }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // 背景
     drawStars();
 
-    // 軌道
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'rgba(255,255,255,0.15)';
     for(let i=0; i<=4; i++) {
@@ -250,7 +241,6 @@ function gameLoop() {
         ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
     }
 
-    // 按鈕
     for(let i=0; i<4; i++) {
         const pTop = getCoords(i, 1.0);
         const pBot = getCoords(i, 1.1);
@@ -277,36 +267,24 @@ function gameLoop() {
         ctx.fillText(LANE_KEYS[i], pBot.x + pBot.w/2, pBot.y - 5);
     }
 
-    // 判定線與判定區間
     const windowMs = 80; 
     const progTop = 1 - (windowMs / LEAD_TIME); 
     const progBot = 1 + (windowMs / LEAD_TIME); 
-
     const topL = getCoords(0, progTop);
     const topR = getCoords(4, progTop);
     const botL = getCoords(0, progBot);
     const botR = getCoords(4, progBot);
 
-    // 1. 畫判定區間的半透明發光背景
     ctx.fillStyle = 'rgba(0, 255, 255, 0.15)'; 
     ctx.beginPath();
-    ctx.moveTo(topL.x - 10, topL.y);
-    ctx.lineTo(topR.x + 10, topR.y);
-    ctx.lineTo(botR.x + 20, botR.y); 
-    ctx.lineTo(botL.x - 20, botL.y);
+    ctx.moveTo(topL.x - 10, topL.y); ctx.lineTo(topR.x + 10, topR.y);
+    ctx.lineTo(botR.x + 20, botR.y); ctx.lineTo(botL.x - 20, botL.y);
     ctx.fill();
 
-    // 2. 畫上下兩條判定邊界線 (細線)
-    ctx.strokeStyle = 'rgba(0, 255, 255, 0.4)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(topL.x - 10, topL.y); ctx.lineTo(topR.x + 10, topR.y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(botL.x - 20, botL.y); ctx.lineTo(botR.x + 20, botR.y);
-    ctx.stroke();
+    ctx.strokeStyle = 'rgba(0, 255, 255, 0.4)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(topL.x - 10, topL.y); ctx.lineTo(topR.x + 10, topR.y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(botL.x - 20, botL.y); ctx.lineTo(botR.x + 20, botR.y); ctx.stroke();
 
-    // 3. 畫原本中心的完美判定線 (粗線 + 強烈發光)
     const hitL = getCoords(0, 1.0);
     const hitR = getCoords(4, 1.0);
     ctx.shadowBlur = 20; ctx.shadowColor = '#00ffff';
@@ -314,7 +292,6 @@ function gameLoop() {
     ctx.beginPath(); ctx.moveTo(hitL.x - 20, hitL.y); ctx.lineTo(hitR.x + 20, hitR.y); ctx.stroke();
     ctx.shadowBlur = 0; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
 
-    // 音符
     activeNotes.forEach(n => {
         if(n.hit) return;
         const hitTime = n.time + userOffset;
@@ -327,7 +304,6 @@ function gameLoop() {
             const pHead = getCoords(lane, progress);
             const pTail = getCoords(lane, progress - 0.2);
             
-            // 繪製漸層本體
             const g = ctx.createLinearGradient(0, pTail.y, 0, pHead.y);
             g.addColorStop(0, 'transparent'); 
             g.addColorStop(0.4, color); 
@@ -335,22 +311,18 @@ function gameLoop() {
             
             ctx.fillStyle = g;
             ctx.beginPath(); 
-            ctx.moveTo(pTail.x, pTail.y); 
-            ctx.lineTo(pTail.x+pTail.w, pTail.y);
-            ctx.lineTo(pHead.x+pHead.w, pHead.y); 
-            ctx.lineTo(pHead.x, pHead.y); 
+            ctx.moveTo(pTail.x, pTail.y); ctx.lineTo(pTail.x+pTail.w, pTail.y);
+            ctx.lineTo(pHead.x+pHead.w, pHead.y); ctx.lineTo(pHead.x, pHead.y); 
             ctx.fill();
             
-            // 繪製邊框
-            ctx.strokeStyle = color; 
-            ctx.lineWidth = 1; 
-            ctx.stroke();
+            ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.stroke();
         }
 
         if(timeDiff < -200) {
             n.hit = true;
             combo = 0; document.getElementById('combo-num').innerText = 0;
             showJudge("MISS", "#555");
+            missCount++; // === 新增：紀錄漏掉的音符 ===
         }
     });
 
@@ -358,7 +330,28 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-// 粒子與星空
+// === 新增：顯示結算畫面與計算分數 ===
+function showResult() {
+    document.getElementById('result-screen').style.display = 'flex';
+    document.getElementById('res-score').innerText = score.toString().padStart(6,'0');
+    document.getElementById('res-perfect').innerText = perfectCount;
+    document.getElementById('res-good').innerText = goodCount;
+    document.getElementById('res-miss').innerText = missCount;
+
+    // 計算準度：Perfect 算 100%，Good 算 50%，防呆避免總音符數為 0
+    let accuracy = 0;
+    if (totalNotes > 0) {
+        accuracy = ((perfectCount + goodCount * 0.5) / totalNotes) * 100;
+    }
+    document.getElementById('res-acc').innerText = accuracy.toFixed(2) + '%';
+}
+
+// === 新增：返回選單按鈕功能 ===
+function backToMenu() {
+    document.getElementById('result-screen').style.display = 'none';
+    initSongList(); // 重新顯示選單
+}
+
 function spawnParticles(lane) {
     const p = getCoords(lane, 1.0);
     const cx = p.x + p.w/2; const cy = p.y; const c = LANE_COLORS[lane];
@@ -379,16 +372,13 @@ function drawStars() {
     ctx.globalAlpha=1;
 }
 
-// 輸入判定
 function handleInput(lane, isDown) {
     activeKeys[lane] = isDown;
     if(isDown && isPlaying) {
         const now = audio.currentTime * 1000;
-        // 尋找判定區間內的音符
         const note = activeNotes.find(n => !n.hit && n.lane === lane && Math.abs((n.time + userOffset) - now) < 160);
         
         if(note) {
-            // --- 成功擊中音符 ---
             note.hit = true;
             combo++; 
             score += 100 + combo * 10;
@@ -396,28 +386,28 @@ function handleInput(lane, isDown) {
             document.getElementById('combo-num').innerText = combo;
             document.getElementById('score').innerText = score.toString().padStart(6,'0');
             
-            // Combo 數字跳動動畫
             const el = document.getElementById('combo-num');
             el.style.transform = "scale(1.3)"; 
             setTimeout(() => el.style.transform = "scale(1)", 100);
             
-            // 判定精準度
             const diff = Math.abs((note.time + userOffset) - now);
             if(diff < 60) {
                 showJudge("PERFECT", "#0ff"); 
+                perfectCount++; // === 新增紀錄 ===
             } else {
                 showJudge("GOOD", "#ff0");
+                goodCount++; // === 新增紀錄 ===
             }
             spawnParticles(lane);
             
         } else {
-            // --- 按空了 (找不到音符) ---
             combo = 0; 
             score = Math.max(0, score - 50); 
             
             document.getElementById('combo-num').innerText = combo;
             document.getElementById('score').innerText = score.toString().padStart(6,'0');
             showJudge("BAD", "#ff0000"); 
+            badCount++; // === 新增紀錄 ===
         }
     }
 }
@@ -427,7 +417,6 @@ function showJudge(txt, col) {
     setTimeout(()=>{ el.style.opacity=0; el.style.transform="scale(1)"; }, 200);
 }
 
-// 事件
 [0,1,2,3].forEach(i => {
     const d = document.getElementById(`z${i}`);
     d.addEventListener('touchstart', (e)=>{ e.preventDefault(); handleInput(i, true); });
